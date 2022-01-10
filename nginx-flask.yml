@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  nginx-flask:
+    image: nginx-flask
+    container_name: nginx-flask-container
+    ports:
+      - "81:81"
+    network_mode: "host"
+
+  alpine-secret:
+    image: alpine-secret
+    container_name: alpine-secret-container
+    command: sleep infinity
+    network_mode: "none"
+
+  client1:
+    image: alpine
+    container_name: client1
+    command: sleep infinity
+    network_mode: "bridge"
+
+  client2:
+    image: alpine
+    container_name: client2
+    command: sleep infinity
+    network_mode: "bridge"
+
+  vip-client1:
+    image: alpine
+    container_name: vip-client1
+    command: sleep infinity
+    networks:
+      - "vip-network"
+  
+  vip-client2:
+    image: alpine
+    container_name: vip-client2
+    command: sleep infinity
+    networks:
+      - "vip-network"
+
+networks:
+  vip-network: {}
+
